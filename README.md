@@ -34,7 +34,7 @@ DevUtils/
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/CyberSphinxxx/For-Badges-Purposes.git
+git clone https://github.com/CyberSphinxxx/DevUtils.git
 cd For-Badges-Purposes
 ```
 
