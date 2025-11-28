@@ -1,0 +1,18 @@
+{
+    "ROLES": {
+        "ADMIN": "admin",
+        "USER": "user",
+        "GUEST": "guest"
+    },
+    "STATUS": {
+        "ACTIVE": "active",
+        "INACTIVE": "inactive",
+        "PENDING": "pending"
+    },
+    "COLORS": {
+        "PRIMARY": "#007bff",
+        "SECONDARY": "#6c757d",
+        "SUCCESS": "#28a745",
+        "DANGER": "#dc3545"
+    }
+}
