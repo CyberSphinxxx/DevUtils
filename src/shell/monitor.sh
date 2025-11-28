@@ -1,9 +1,15 @@
 #!/bin/bash
 
-# Mock system monitor
-echo "Monitoring system resources..."
+# Monitor script
+# Usage: ./monitor.sh
 
-while true; do
-  echo "CPU: $(($RANDOM % 100))% | Memory: $(($RANDOM % 100))%"
-  sleep 2
-done
+echo "System Status:"
+echo "----------------"
+echo "Date: $(date)"
+echo "Uptime: $(uptime -p)"
+echo "----------------"
+echo "Memory Usage:"
+free -h
+echo "----------------"
+echo "Disk Usage:"
+df -h /
