@@ -1,16 +1,25 @@
 #!/bin/bash
 
-# Mock deployment script
-echo "Starting deployment..."
+# Deploy script
+# Usage: ./deploy.sh <environment>
 
-echo "Building project..."
-sleep 1
-echo "Build complete."
+ENV=$1
 
-echo "Running tests..."
-sleep 1
-echo "Tests passed."
+if [ -z "$ENV" ]; then
+    echo "Usage: $0 <environment>"
+    exit 1
+fi
 
-echo "Deploying to production..."
+echo "Deploying to $ENV..."
+
+# Simulate deployment steps
+echo "1. Pulling latest code..."
 sleep 1
-echo "Deployment successful!"
+echo "2. Installing dependencies..."
+sleep 1
+echo "3. Building application..."
+sleep 1
+echo "4. Restarting services..."
+sleep 1
+
+echo "Deployment to $ENV successful!"
