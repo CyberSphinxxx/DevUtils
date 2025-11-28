@@ -1,18 +1,25 @@
 #!/bin/bash
 
-# Simple backup script
-SOURCE_DIR="./src"
-BACKUP_DIR="./backups"
-TIMESTAMP=$(date +"%Y%m%d%H%M%S")
-BACKUP_FILE="backup_$TIMESTAMP.tar.gz"
+# Backup script
+# Usage: ./backup.sh <source_directory> <backup_directory>
+
+SOURCE_DIR=$1
+BACKUP_DIR=$2
+DATE=$(date +%Y%m%d_%H%M%S)
+
+if [ -z "$SOURCE_DIR" ] || [ -z "$BACKUP_DIR" ]; then
+    echo "Usage: $0 <source_directory> <backup_directory>"
+    exit 1
+fi
+
+if [ ! -d "$SOURCE_DIR" ]; then
+    echo "Error: Source directory does not exist."
+    exit 1
+fi
 
 mkdir -p "$BACKUP_DIR"
 
-echo "Backing up $SOURCE_DIR to $BACKUP_DIR/$BACKUP_FILE..."
-tar -czf "$BACKUP_DIR/$BACKUP_FILE" "$SOURCE_DIR"
+ARCHIVE_NAME="backup_$DATE.tar.gz"
+tar -czf "$BACKUP_DIR/$ARCHIVE_NAME" -C "$SOURCE_DIR" .
 
-if [ $? -eq 0 ]; then
-  echo "Backup successful!"
-else
-  echo "Backup failed!"
-fi
+echo "Backup created successfully: $BACKUP_DIR/$ARCHIVE_NAME"
