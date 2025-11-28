@@ -10,7 +10,11 @@ def run_command(command):
         return None
 
 def main():
-    # Get status
+    # Stage all files first
+    print("Staging all files...")
+    run_command(['git', 'add', '.'])
+
+    # Get status of staged files
     status_output = run_command(['git', 'status', '--porcelain'])
     if not status_output:
         print("No changes found.")
@@ -21,8 +25,12 @@ def main():
         if not line.strip():
             continue
         
-        # Status is first 2 chars, filename follows
-        status = line[:2]
+        # Porcelain format: XY PATH
+        # XY are status codes. PATH starts at index 3.
+        # But let's be safer: find the first space after index 2?
+        # Actually, standard porcelain is strictly index 3 for path start.
+        # Let's try to just take the rest of the line.
+        
         filename = line[3:].strip()
         
         # Handle renamed files if necessary (format: R  old -> new)
@@ -33,25 +41,23 @@ def main():
         if filename.startswith('"') and filename.endswith('"'):
             filename = filename[1:-1]
             
-        files_to_commit.append((status, filename))
+        files_to_commit.append(filename)
 
     print(f"Found {len(files_to_commit)} files to commit.")
 
-    for status, filename in files_to_commit:
-        print(f"Processing {filename}...")
-        
-        # Add file
-        run_command(['git', 'add', filename])
+    for filename in files_to_commit:
+        print(f"Committing {filename}...")
         
         # Determine message
-        if '??' in status:
-            message = f"Add {os.path.basename(filename)}"
-        else:
-            message = f"Update {os.path.basename(filename)}"
+        # Since we don't track status per file easily here (all are staged 'A' or 'M'),
+        # we'll just use a generic "Update" or "Add" based on file existence?
+        # Or just "Add/Update <filename>"
+        
+        message = f"Add/Update {os.path.basename(filename)}"
             
-        # Commit
-        run_command(['git', 'commit', '-m', message])
-        print(f"Committed {filename}")
+        # Commit specific file
+        # Note: git commit -m "msg" -- <file> commits the changes to that file from the index.
+        run_command(['git', 'commit', '-m', message, '--', filename])
 
 if __name__ == "__main__":
     main()
