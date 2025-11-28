@@ -1,14 +1,19 @@
 #!/bin/bash
 
-# Mock environment setup
+# Setup Environment script
+# Usage: ./setup_env.sh
+
 echo "Setting up development environment..."
 
-echo "Installing dependencies..."
-sleep 1
-echo "Dependencies installed."
+# Check for required tools
+TOOLS=("git" "node" "python3")
 
-echo "Configuring database..."
-sleep 1
-echo "Database configured."
+for tool in "${TOOLS[@]}"; do
+    if ! command -v "$tool" &> /dev/null; then
+        echo "Error: $tool is not installed."
+    else
+        echo "$tool is installed."
+    fi
+done
 
-echo "Environment setup complete!"
+echo "Environment setup complete."
