@@ -1,0 +1,8 @@
+database:
+  host: localhost
+  port: 5432
+  username: admin
+  password: password123
+  name: fbp_db
+  pool_size: 10
+  timeout: 30s
