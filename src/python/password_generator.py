@@ -1,24 +1,29 @@
-import random
+import secrets
 import string
-import sys
+import argparse
 
-def generate_password(length=12, use_special_chars=True):
+def generate_password(length=12, include_symbols=True):
     """
     Generates a secure random password.
     """
-    chars = string.ascii_letters + string.digits
-    if use_special_chars:
-        chars += string.punctuation
+    if length < 4:
+        print("Error: Password length must be at least 4.")
+        return None
 
-    password = ''.join(random.choice(chars) for _ in range(length))
+    characters = string.ascii_letters + string.digits
+    if include_symbols:
+        characters += string.punctuation
+
+    password = ''.join(secrets.choice(characters) for _ in range(length))
     return password
 
 if __name__ == "__main__":
-    length = 12
-    if len(sys.argv) > 1:
-        try:
-            length = int(sys.argv[1])
-        except ValueError:
-            print("Invalid length. Using default 12.")
+    parser = argparse.ArgumentParser(description="Generate a secure random password.")
+    parser.add_argument("-l", "--length", type=int, default=12, help="Length of the password (default: 12)")
+    parser.add_argument("--no-symbols", action="store_true", help="Exclude symbols from the password")
     
-    print(f"Generated Password: {generate_password(length)}")
+    args = parser.parse_args()
+    
+    password = generate_password(args.length, not args.no_symbols)
+    if password:
+        print(f"Generated Password: {password}")
