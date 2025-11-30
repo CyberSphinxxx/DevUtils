@@ -1,0 +1,15 @@
+{
+    "app_name": "DevUtils",
+    "version": "1.0.0",
+    "environment": "development",
+    "debug": true,
+    "features": {
+        "enable_logging": true,
+        "enable_metrics": false,
+        "max_users": 100
+    },
+    "api": {
+        "timeout": 5000,
+        "retries": 3
+    }
+}
